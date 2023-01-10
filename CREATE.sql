@@ -5,20 +5,6 @@ create table if not exists collection_
 	production_year date not null
 );
 
-create table if not exists tracks
-(
-	id_track int not null primary key,
-	name_ varchar(50) not null,
-	length_ time not null
-);
-
-create table if not exists compilation_tracks
-( 
-	id_collection int not null references collection_(id_collection),
-	id_track int not null references tracks(id_track),
-	primary key(id_collection, id_track)
-);
-
 create table if not exists albums
 (
 	id_album int not null primary key,
@@ -26,11 +12,19 @@ create table if not exists albums
 	production_year date not null
 );
 
-create table if not exists albums_track
+create table if not exists tracks
 (
-	 id_album int not null references albums(id_album),
-	 id_track int not null references tracks(id_track),
-	 primary key(id_album, id_track)
+	id_track int not null primary key,
+	name_ varchar(50) not null,
+	length_ int not NULL,
+	id_album int NOT NULL REFERENCES albums(id_album)
+);
+
+create table if not exists compilation_tracks
+( 
+	id_collection int not null references collection_(id_collection),
+	id_track int not null references tracks(id_track),
+	primary key(id_collection, id_track)
 );
 
 create table if not exists performer
